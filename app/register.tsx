@@ -1,6 +1,7 @@
 import { View, Text, TextInput, Pressable } from "react-native";
 import { useState } from "react";
 import { api } from "../services/api";
+import { Alert } from "react-native";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -22,6 +23,11 @@ export default function Register() {
       });
 
       console.log("REGISTER SUCCESS:", res.data);
+      Alert.alert(
+  "Verify Email",
+  "A verification link has been sent to your email."
+);
+
     } catch (err: any) {
       console.log("REGISTER ERROR:", err.response?.data || err.message);
     } finally {
@@ -31,7 +37,7 @@ export default function Register() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 20 }}>
-      <Text style={{ fontSize: 22, marginBottom: 20 }}>Register</Text>
+      <Text style={{ fontSize: 22, marginBottom: 20 }}>Register :</Text>
 
       <Text>Email</Text>
       <TextInput
