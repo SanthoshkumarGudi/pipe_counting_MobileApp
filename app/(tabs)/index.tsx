@@ -7,13 +7,13 @@ export default function HomeScreen() {
       <Text style={{ fontSize: 22, marginBottom: 20 }}>Home Screen</Text>
 
       <Pressable
-        onPress={() => router.push("/login")}
+        onPress={() => router.push("/auth/login")}
         style={{ backgroundColor: "black", padding: 12 }}
       >
         <Text style={{ color: "white" }}>Go to Login</Text>
       </Pressable>
       <Pressable
-      onPress={()=>router.push("/register")}
+      onPress={()=>router.push("/auth/register")}
       >
 <Text>Register</Text>
       </Pressable>

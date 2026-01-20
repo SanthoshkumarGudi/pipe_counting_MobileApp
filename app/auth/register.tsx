@@ -1,7 +1,8 @@
 import { View, Text, TextInput, Pressable } from "react-native";
 import { useState } from "react";
-import { api } from "../services/api";
+import { api } from "@/services/api";
 import { Alert } from "react-native";
+import { router } from "expo-router";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -81,6 +82,8 @@ export default function Register() {
           {loading ? "Registering..." : "Register"}
         </Text>
       </Pressable>
+      <Pressable
+      onPress={()=>router.navigate("/(tabs)")}><Text>Go to Home Page</Text></Pressable>
     </View>
   );
 }

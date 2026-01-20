@@ -43,7 +43,7 @@ export default function Login() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 20 }}>
-      <Text style={{ fontSize: 22, marginBottom: 20 }}>Login</Text>
+      <Text style={{ fontSize: 22, marginBottom: 20 }}>Login here</Text>
 
       <Text>Email</Text>
       <TextInput
@@ -76,6 +76,11 @@ export default function Login() {
           {loading ? "Logging in..." : "Login"}
         </Text>
       </Pressable>
+      <Pressable onPress={() => router.push("/auth/forgot-password")}>
+  <Text style={{ color: "blue", textAlign: "right" }}>
+    Forgot password?
+  </Text>
+</Pressable>
     </View>
   );
 }

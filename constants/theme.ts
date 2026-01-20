@@ -9,6 +9,11 @@ const tintColorLight = '#0a7ea4';
 const tintColorDark = '#fff';
 
 export const Colors = {
+    primary: "#2FA4DC",   // blue button
+  text: "#1E1E1E",
+  gray: "#9E9E9E",
+  border: "#E0E0E0",
+  background: "#FFFFFF",
   light: {
     text: '#11181C',
     background: '#fff',
@@ -51,3 +56,8 @@ export const Fonts = Platform.select({
     mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
   },
 });
+
+export const SIZES = {
+  radius: 12,
+  inputHeight: 52,
+};
