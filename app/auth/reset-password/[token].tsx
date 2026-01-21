@@ -17,7 +17,13 @@ console.log("🔥 RESET BUTTON CLICKED");
   try {
     await api.post(`/auth/reset-password/${token}`, {
       password,
-    });
+    },
+    { // This is the third argument: the config object
+        headers: {
+          "ngrok-skip-browser-warning": "any-value", // Add this header
+        },
+      }
+  );
 
     Alert.alert("Success", "Password updated");
     router.replace("/auth/login");

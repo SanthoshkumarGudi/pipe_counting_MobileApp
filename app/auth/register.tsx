@@ -1,89 +1,69 @@
-import { View, Text, TextInput, Pressable } from "react-native";
+import { View, Text, TextInput, Pressable, Alert } from "react-native";
 import { useState } from "react";
 import { api } from "@/services/api";
-import { Alert } from "react-native";
 import { router } from "expo-router";
 
 export default function Register() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
 
   const register = async () => {
-    if (!email || !password) {
-      console.log("Email and password required");
-      return;
-    }
-
+    if (!name || !email || !password || !phone) return Alert.alert("Error", "All fields required");
+    setLoading(true);
     try {
-      setLoading(true);
-
-      const res = await api.post("/auth/register", {
-        email,
-        password,
-      });
-
-      console.log("REGISTER SUCCESS:", res.data);
-      Alert.alert(
-  "Verify Email",
-  "A verification link has been sent to your email."
-);
-
+      await api.post("/auth/register", { name, email, password, phone });
+      Alert.alert("Success", "Verification link sent to your email.");
+      router.push("/auth/login");
     } catch (err: any) {
-      console.log("REGISTER ERROR:", err.response?.data || err.message);
+      Alert.alert("Error", err.response?.data?.error || "Registration failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", padding: 20 }}>
-      <Text style={{ fontSize: 22, marginBottom: 20 }}>Register :</Text>
-
-      <Text>Email</Text>
+    <View style={{ flex: 1, justifyContent: "center", padding: 20, backgroundColor: "#fff" }}>
+      <Text style={{ fontSize: 24, marginBottom: 20, textAlign: "center" }}>Create your account</Text>
       <TextInput
-        placeholder="Enter email"
+        placeholder="Name"
+        value={name}
+        onChangeText={setName}
+        style={{ borderWidth: 1, borderColor: "#ccc", padding: 10, borderRadius: 5, marginBottom: 15 }}
+      />
+      <TextInput
+        placeholder="Email"
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
         keyboardType="email-address"
-        style={{
-          borderWidth: 1,
-          borderRadius: 6,
-          padding: 10,
-          marginBottom: 15,
-        }}
+        style={{ borderWidth: 1, borderColor: "#ccc", padding: 10, borderRadius: 5, marginBottom: 15 }}
       />
-
-      <Text>Password</Text>
       <TextInput
-        placeholder="Enter password"
+        placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        style={{
-          borderWidth: 1,
-          borderRadius: 6,
-          padding: 10,
-          marginBottom: 20,
-        }}
+        style={{ borderWidth: 1, borderColor: "#ccc", padding: 10, borderRadius: 5, marginBottom: 15 }}
       />
-
+      <TextInput
+        placeholder="Phone"
+        value={phone}
+        onChangeText={setPhone}
+        keyboardType="phone-pad"
+        style={{ borderWidth: 1, borderColor: "#ccc", padding: 10, borderRadius: 5, marginBottom: 20 }}
+      />
       <Pressable
         onPress={register}
         disabled={loading}
-        style={{
-          backgroundColor: loading ? "#999" : "#000",
-          padding: 14,
-          borderRadius: 6,
-        }}
+        style={{ backgroundColor: loading ? "#999" : "#00BFFF", padding: 15, borderRadius: 30 }}
       >
-        <Text style={{ color: "white", textAlign: "center", fontSize: 16 }}>
-          {loading ? "Registering..." : "Register"}
+        <Text style={{ color: "#fff", textAlign: "center", fontWeight: "bold" }}>
+          {loading ? "Registering..." : "REGISTER"}
         </Text>
       </Pressable>
-      <Pressable
-      onPress={()=>router.navigate("/(tabs)")}><Text>Go to Home Page</Text></Pressable>
     </View>
   );
 }

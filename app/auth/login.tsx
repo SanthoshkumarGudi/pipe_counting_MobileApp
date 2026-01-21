@@ -2,6 +2,7 @@ import { View, Text, TextInput, Pressable, Alert } from "react-native";
 import { useState } from "react";
 import { api } from "@/services/api";
 import { router } from "expo-router";
+import * as SecureStore from "expo-secure-store";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -9,78 +10,53 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   const login = async () => {
-    if (!email || !password) {
-      Alert.alert("Error", "Email and password required");
-      return;
-    }
-
+    if (!email || !password) return Alert.alert("Error", "Email and password required");
+    setLoading(true);
     try {
-      setLoading(true);
-
-      const res = await api.post("/auth/login", {
-        email,
-        password,
-      });
-
-      console.log("LOGIN SUCCESS:", res.data);
-
-      console.log("LOGIN SUCCESS:", res);
-
+      const res = await api.post("/auth/login", { email, password });
+      await SecureStore.setItemAsync("authToken", res.data.token);
       Alert.alert("Success", "Login successful");
-
-      // ✅ NAVIGATE AFTER SUCCESS
-      router.push("/dashboard");
-
+      router.replace("/(tabs)/template"); // Redirect to templates
     } catch (err: any) {
-      Alert.alert(
-        "Login Failed",
-        err.response?.data?.error || "Something went wrong"
-      );
+      Alert.alert("Login Failed", err.response?.data?.error || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", padding: 20 }}>
-      <Text style={{ fontSize: 22, marginBottom: 20 }}>Login here</Text>
-
-      <Text>Email</Text>
+    <View style={{ flex: 1, justifyContent: "center", padding: 20, backgroundColor: "#fff" }}>
+      <Text style={{ fontSize: 24, marginBottom: 20, textAlign: "center" }}>Login to your account</Text>
       <TextInput
-        placeholder="Enter email"
+        placeholder="Email"
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
         keyboardType="email-address"
-        style={{ borderWidth: 1, padding: 10, marginBottom: 15 }}
+        style={{ borderWidth: 1, borderColor: "#ccc", padding: 10, borderRadius: 5, marginBottom: 15 }}
       />
-
-      <Text>Password</Text>
       <TextInput
-        placeholder="Enter password"
+        placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        style={{ borderWidth: 1, padding: 10, marginBottom: 20 }}
+        style={{ borderWidth: 1, borderColor: "#ccc", padding: 10, borderRadius: 5, marginBottom: 20 }}
       />
-
       <Pressable
         onPress={login}
         disabled={loading}
-        style={{
-          backgroundColor: loading ? "#999" : "black",
-          padding: 14,
-        }}
+        style={{ backgroundColor: loading ? "#999" : "#00BFFF", padding: 15, borderRadius: 30 }}
       >
-        <Text style={{ color: "white", textAlign: "center" }}>
-          {loading ? "Logging in..." : "Login"}
+        <Text style={{ color: "#fff", textAlign: "center", fontWeight: "bold" }}>
+          {loading ? "Logging in..." : "LOGIN"}
         </Text>
       </Pressable>
       <Pressable onPress={() => router.push("/auth/forgot-password")}>
-  <Text style={{ color: "blue", textAlign: "right" }}>
-    Forgot password?
-  </Text>
-</Pressable>
+        <Text style={{ color: "#00BFFF", textAlign: "center", marginTop: 10 }}>Forgot Password?</Text>
+      </Pressable>
+      <Pressable onPress={() => router.push("/auth/register")}>
+        <Text style={{ color: "#00BFFF", textAlign: "center" }}>Register</Text>
+      </Pressable>
     </View>
   );
 }
