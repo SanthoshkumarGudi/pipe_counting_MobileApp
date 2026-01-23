@@ -2,6 +2,7 @@ import { View, Text, TextInput, Pressable, Alert } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
 import { useState } from "react";
 import { api } from "@/services/api";
+import { Ionicons } from '@expo/vector-icons';
 
 export default function ResetPassword() {
   const params = useLocalSearchParams();
@@ -36,6 +37,38 @@ console.log("🔥 RESET BUTTON CLICKED");
 
   return (
     <View style={{ padding: 20 }}>
+           <Pressable
+  onPress={() => router.back()}
+  style={{
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 50,           // adjust if needed (safe area)
+    left: 20,
+    zIndex: 10,
+  }}
+>
+  <Ionicons name="arrow-back" size={28} color="#00BFFF" />
+  <Text style={{ marginLeft: 8, color: "#00BFFF", fontSize: 18, fontWeight: '500' }}>
+    Back
+  </Text>
+</Pressable>
+      <Pressable
+  onPress={() => router.back()}
+  style={{
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 50,           // adjust if needed (safe area)
+    left: 20,
+    zIndex: 10,
+  }}
+>
+  <Ionicons name="arrow-back" size={28} color="#00BFFF" />
+  <Text style={{ marginLeft: 8, color: "#00BFFF", fontSize: 18, fontWeight: '500' }}>
+    Back
+  </Text>
+</Pressable>
       <Text>Reset Password</Text>
 
       <TextInput

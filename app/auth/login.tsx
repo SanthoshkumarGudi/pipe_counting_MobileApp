@@ -3,6 +3,8 @@ import { useState } from "react";
 import { api } from "@/services/api";
 import { router } from "expo-router";
 import * as SecureStore from "expo-secure-store";
+import { Ionicons } from '@expo/vector-icons';
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -26,6 +28,22 @@ export default function Login() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 20, backgroundColor: "#fff" }}>
+                 <Pressable
+        onPress={() => router.back()}
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          position: 'absolute',
+          top: 50,           // adjust if needed (safe area)
+          left: 20,
+          zIndex: 10,
+        }}
+      >
+        <Ionicons name="arrow-back" size={28} color="#00BFFF" />
+        <Text style={{ marginLeft: 8, color: "#00BFFF", fontSize: 18, fontWeight: '500' }}>
+          Back
+        </Text>
+      </Pressable>
       <Text style={{ fontSize: 24, marginBottom: 20, textAlign: "center" }}>Login to your account</Text>
       <TextInput
         placeholder="Email"
