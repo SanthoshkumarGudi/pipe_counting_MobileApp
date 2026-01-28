@@ -113,7 +113,7 @@ export default function TemplateScreen() {
 return (
   <SafeAreaView style={styles.container} edges={['bottom', 'left', 'right']}>
     {/* Back button – placed at top level, uses safe area top inset */}
-    <Pressable
+    {/* <Pressable
       onPress={() => router.back()}
       style={({ pressed }) => [
         {
@@ -141,7 +141,7 @@ return (
       >
         Back
       </Text>
-    </Pressable>
+    </Pressable> */}
 
     {/* Header content – title + search – no back button inside */}
     <View style={styles.header}>

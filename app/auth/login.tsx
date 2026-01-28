@@ -17,6 +17,8 @@ export default function Login() {
     try {
       const res = await api.post("/auth/login", { email, password });
       await SecureStore.setItemAsync("authToken", res.data.token);
+      console.log("authtoken is ",res.data.token);
+      
       Alert.alert("Success", "Login successful");
       router.replace("/(tabs)/template"); // Redirect to templates
     } catch (err: any) {
