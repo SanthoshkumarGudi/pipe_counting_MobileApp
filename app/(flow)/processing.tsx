@@ -95,6 +95,8 @@ console.log('Navigating to review with count:', realCount);
       {/* Helpful message from your design doc */}
       <View style={styles.infoBox}>
         <Text style={styles.infoTitle}>Current Counting Template</Text>
+        <Text>{templateName}</Text>
+        <Text></Text>
         <Text style={styles.infoText}>
           Speed & Accuracy depend on the template used.{'\n'}
           Contact us if the results are not accurate.

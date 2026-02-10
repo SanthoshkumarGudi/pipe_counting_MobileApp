@@ -1,5 +1,5 @@
 // app/image-select.tsx
-import { View, Text, Pressable, Alert, StyleSheet, Platform } from 'react-native';
+import { View, Text, Pressable, Alert, StyleSheet, Platform, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useLocalSearchParams, router } from 'expo-router';
 import { useEffect } from 'react';
@@ -26,8 +26,25 @@ export default function ImageSelect() {
       // mediaTypes: ImagePicker.MediaTypeOptions.Images,
       mediaTypes: ['images'],          // ← fixed: array instead of deprecated enum
       allowsEditing: true,
-      quality: 0.8,
+      quality: 0.9,
     });
+
+    // result returns an object
+    // ex:
+    // {
+    //   canceled: false,
+    //   assets: [
+    //     {
+    //       uri: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/...",
+    //       width: 3024,
+    //       height: 4032,
+    //       type: "image",
+    //       fileName: "IMG_1234.jpg"
+    //     }
+
+    //   ]
+    // }
+
 
     if (!result.canceled && result.assets?.[0]?.uri) {
       router.push({
@@ -40,7 +57,7 @@ export default function ImageSelect() {
   const takePhoto = async () => {
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: false,
-      quality: 0.8,
+      quality: 0.9,
     });
 
     if (!result.canceled && result.assets?.[0]?.uri) {
@@ -62,43 +79,156 @@ export default function ImageSelect() {
 
   return (
     <View style={styles.container}>
-      <Pressable style={styles.back} onPress={() => router.back()}>
-        <Ionicons name="arrow-back" size={28} color="#333" />
-      </Pressable>
 
-      <Text style={styles.title}>{templateName}</Text>
+      {/* Header */}
+      <View style={styles.header}>
+        <Pressable onPress={() => router.back()}>
+          <Ionicons name="arrow-back" size={24} color="#000" />
+        </Pressable>
+        <Text style={styles.headerTitle}>Template Home</Text>
+        <View style={{ width: 24 }} />
+      </View>
 
-      <Pressable style={styles.btn} onPress={pickFromGallery}>
-        <Text style={styles.btnText}>USE EXISTING PHOTO</Text>
-      </Pressable>
+      {/* Template Card */}
+      <View style={styles.templateCard}>
+        <Image
+          source={{ uri: 'https://placekitten.com/400/400' }}
+          style={styles.templateImage}
+        />
+        <Text style={styles.templateName}>{templateName}</Text>
 
-      <Pressable style={styles.btn} onPress={takePhoto}>
-        <Text style={styles.btnText}>TAKE NEW PHOTO</Text>
-      </Pressable>
+        <Pressable
+          style={styles.changeBtn}
+          onPress={() => router.push('/(tabs)/template')}
+        >
+          <Text style={styles.changeBtnText}>CHANGE COUNTING TEMPLATE</Text>
+        </Pressable>
+      </View>
 
-      <Pressable style={[styles.btn, styles.sampleBtn]} onPress={useSample}>
-        <Text style={styles.btnText}>COUNT FROM SAMPLE PHOTO</Text>
+      {/* Action Cards */}
+      <View style={styles.row}>
+        <Pressable style={styles.actionCard} onPress={pickFromGallery}>
+          <Ionicons name="images-outline" size={40} color="#3aa8e3" />
+          <Text style={styles.actionText}>USE EXISTING PHOTO</Text>
+        </Pressable>
+
+        <Pressable style={styles.actionCard} onPress={takePhoto}>
+          <Ionicons name="camera-outline" size={40} color="#3aa8e3" />
+          <Text style={styles.actionText}>TAKE NEW PHOTO</Text>
+        </Pressable>
+      </View>
+
+      {/* Sample */}
+      <Pressable style={styles.sampleCard} onPress={useSample}>
+        <Text style={styles.sampleText}>COUNT FROM SAMPLE PHOTO</Text>
+        <Image
+          source={{ uri: 'https://placekitten.com/300/300' }}
+          style={styles.sampleImage}
+        />
       </Pressable>
     </View>
   );
+
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, backgroundColor: '#fff', justifyContent: 'center' },
-  back: { position: 'absolute', top: 50, left: 20, zIndex: 10 },
-  title: { fontSize: 26, fontWeight: '700', color: '#00BFFF', marginBottom: 60, textAlign: 'center' },
-  btn: {
-    backgroundColor: '#00BFFF',
-    paddingVertical: 18,
-    borderRadius: 30,
-    marginVertical: 12,
+  container: {
+    flex: 1,
+    backgroundColor: '#f2f2f2',
+    padding: 16,
+  },
+
+  /* Header */
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#000',
+  },
+
+  /* Template Card */
+  templateCard: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  templateImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  templateName: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginBottom: 12,
+    textAlign: 'center'
+  },
+  changeBtn: {
+    backgroundColor: '#2ea8df',
+    paddingVertical: 12,
+    borderRadius: 24,
+    alignItems: 'center',
+  },
+  changeBtnText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 14,
+  },
+
+  /* Action cards */
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  actionCard: {
+    width: '48%',
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    paddingVertical: 28,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 4,
   },
-  sampleBtn: { backgroundColor: '#4CAF50' },
-  btnText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  actionText: {
+    marginTop: 12,
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#3aa8e3',
+    textAlign: 'center',
+  },
+
+  /* Sample */
+  sampleCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#0bb27a',
+    borderRadius: 16,
+    padding: 16,
+  },
+  sampleText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '700',
+    width: '60%',
+  },
+  sampleImage: {
+    width: 70,
+    height: 70,
+    borderRadius: 8,
+  },
 });

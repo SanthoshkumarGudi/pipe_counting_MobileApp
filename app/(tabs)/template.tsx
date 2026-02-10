@@ -112,36 +112,6 @@ export default function TemplateScreen() {
 
 return (
   <SafeAreaView style={styles.container} edges={['bottom', 'left', 'right']}>
-    {/* Back button – placed at top level, uses safe area top inset */}
-    {/* <Pressable
-      onPress={() => router.back()}
-      style={({ pressed }) => [
-        {
-          position: 'absolute',
-          top: 1,                  // small fixed top padding
-          left: 16,
-          zIndex: 100,
-          flexDirection: 'row',
-          alignItems: 'center',
-          padding: 8,
-          borderRadius: 8,
-          backgroundColor: pressed ? 'rgba(0,0,0,0.08)' : 'transparent',
-        },
-      ]}
-    >
-      <Ionicons style={{paddingTop:20}} name="arrow-back" size={25} color="#00BFFF" />
-      <Text
-        style={{
-          paddingTop:20,
-          marginLeft: 8,
-          color: '#00BFFF',
-          fontSize: 15,
-          fontWeight: '500',
-        }}
-      >
-        Back
-      </Text>
-    </Pressable> */}
 
     {/* Header content – title + search – no back button inside */}
     <View style={styles.header}>

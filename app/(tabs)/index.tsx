@@ -8,6 +8,8 @@ import {
   StyleSheet,
   StatusBar,
   ActivityIndicator,
+  Alert,
+  Pressable
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
@@ -20,21 +22,25 @@ const logo = require('../../assets/images/prixgen.png');
 
 export default function OpeningScreen() {
   const [isChecking, setIsChecking] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const token = await SecureStore.getItemAsync('authToken');
-        if (token) {
-          // User is already logged in → skip straight to main app (tabs)
-          router.replace('/(tabs)/template'); // or '/(tabs)/home' if that's your main tab
-        }
+        setIsLoggedIn(!!token);
+        router.replace('./(tabs)/template')
+        // if (token) {
+        //   // User is already logged in → skip straight to main app (tabs)
+        //   router.replace('/(tabs)/template'); // or '/(tabs)/home' if that's your main tab
+        // }
       } catch (err) {
         console.log('Auth check error:', err);
       } finally {
         setIsChecking(false); // done checking → show buttons only if needed
       }
     };
+    console.log("isChecking value ", isChecking);
 
     checkAuth();
   }, []);
@@ -48,13 +54,33 @@ export default function OpeningScreen() {
     );
   }
 
+
+  const handleLogout = async () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to log out?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Logout',
+          style: 'destructive',
+          onPress: async () => {
+            await SecureStore.deleteItemAsync('authToken');
+            setIsLoggedIn(false);
+          },
+        },
+      ]
+    );
+  };
+
   // Only reach here if NO token → show unauthenticated screen (Figure 1)
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
-
-      <LinearGradient
-        colors={['#4a90e2', '#50c9c3', '#f6a623']} // matches your current + PDF vibe
+      {isLoggedIn ? <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutText}>Logout</Text>
+      </TouchableOpacity> : <LinearGradient
+        colors={['#ffffff', '#ffffff', '#ffffff']} // matches your current + PDF vibe
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
@@ -88,7 +114,8 @@ export default function OpeningScreen() {
             <Text style={styles.buttonText}>CONTINUE AS GUEST</Text>
           </TouchableOpacity>
         </View>
-      </LinearGradient>
+      </LinearGradient>}
+
     </SafeAreaView>
   );
 }
@@ -133,5 +160,25 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     letterSpacing: 1,
+  },
+  logoutButton: {
+    backgroundColor: '#2196F3', // red for destructive action
+    paddingVertical: 16,
+    paddingHorizontal: 60,
+    borderRadius: 12,
+    marginTop: 100,
+    margin: 45,
+    width: '80%',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 5,
+  },
+  logoutText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
   },
 });
