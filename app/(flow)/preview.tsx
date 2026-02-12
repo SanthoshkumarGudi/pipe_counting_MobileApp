@@ -57,32 +57,32 @@ export default function PreviewScreen() {
         </Pressable>
 
         {/* Bottom action area */}
-       {/* // ... rest of your component above remains similar ... */}
+        {/* // ... rest of your component above remains similar ... */}
 
-<View style={styles.bottomBar}>
-  <Pressable style={styles.bottomIconButton} onPress={() => { /* open tools */ }}>
-    <Ionicons name="grid-outline" size={26} color="#555" />
-    <Text style={styles.bottomLabel}>Tools</Text>
-  </Pressable>
+        <View style={styles.bottomBar}>
+          <Pressable style={styles.bottomIconButton} onPress={() => { /* open tools */ }}>
+            <Ionicons name="grid-outline" size={26} color="#555" />
+            <Text style={styles.bottomLabel}>Tools</Text>
+          </Pressable>
 
-  <Pressable style={styles.bottomIconButton} onPress={() => { /* open form */ }}>
-    <Ionicons name="document-text-outline" size={26} color="#555" />
-    <Text style={styles.bottomLabel}>Form</Text>
-  </Pressable>
+          <Pressable style={styles.bottomIconButton} onPress={() => { /* open form */ }}>
+            <Ionicons name="document-text-outline" size={26} color="#555" />
+            <Text style={styles.bottomLabel}>Form</Text>
+          </Pressable>
 
-  {/* Big COUNT button in center */}
-  <Pressable style={styles.countButton} onPress={goToProcessing}>
-    <Text style={styles.countButtonText}>COUNT</Text>
-  </Pressable>
+          {/* Big COUNT button in center */}
+          <Pressable style={styles.countButton} onPress={goToProcessing}>
+            <Text style={styles.countButtonText}>COUNT</Text>
+          </Pressable>
 
-  <Pressable style={styles.bottomIconButton} onPress={() => { /* more options */ }}>
-    <Ionicons name="ellipsis-horizontal" size={26} color="#555" />
-    <Text style={styles.bottomLabel}>More</Text>
-  </Pressable>
+          <Pressable style={styles.bottomIconButton} onPress={() => { /* more options */ }}>
+            <Ionicons name="ellipsis-horizontal" size={26} color="#555" />
+            <Text style={styles.bottomLabel}>More</Text>
+          </Pressable>
 
-  {/* Optional: if you want to keep a "hidden" fifth spot for balance */}
-  <View style={{ width: 60 }} /> 
-</View>
+          {/* Optional: if you want to keep a "hidden" fifth spot for balance */}
+          <View style={{ width: 60 }} />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -143,15 +143,15 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   reselectText: {
-     color: 'black',
+    color: 'black',
     fontSize: 16,
     fontWeight: '700',
-  
+
   },
   bottomActions: {
     paddingBottom: 24,
     gap: 16,
-    alignItems:'center'
+    alignItems: 'center'
   },
   secondaryButtons: {
     flexDirection: 'row',
@@ -222,6 +222,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     letterSpacing: 0.4,
-  
+
   },
 });

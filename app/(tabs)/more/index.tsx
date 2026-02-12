@@ -8,11 +8,11 @@ import { useFocusEffect, router } from 'expo-router';
 export default function MoreScreen() {
   const navigation = useNavigation();
 
-  useFocusEffect(()=>{
-      const openDrawer = () => {
-    navigation.dispatch(DrawerActions.openDrawer());
-  };
-  openDrawer()
+  useFocusEffect(() => {
+    const openDrawer = () => {
+      navigation.dispatch(DrawerActions.openDrawer());
+    };
+    openDrawer()
   })
 
 

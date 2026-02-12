@@ -110,52 +110,52 @@ export default function TemplateScreen() {
     </TouchableOpacity>
   );
 
-return (
-  <SafeAreaView style={styles.container} edges={['bottom', 'left', 'right']}>
+  return (
+    <SafeAreaView style={styles.container} edges={['bottom', 'left', 'right']}>
 
-    {/* Header content – title + search – no back button inside */}
-    <View style={styles.header}>
-      <Text style={styles.title}>Templates</Text>
-      <TextInput
-        placeholder="Search templates..."
-        value={search}
-        onChangeText={setSearch}
-        style={styles.searchInput}
-        autoCapitalize="none"
-      />
-    </View>
+      {/* Header content – title + search – no back button inside */}
+      <View style={styles.header}>
+        <Text style={styles.title}>Templates</Text>
+        <TextInput
+          placeholder="Search templates..."
+          value={search}
+          onChangeText={setSearch}
+          style={styles.searchInput}
+          autoCapitalize="none"
+        />
+      </View>
 
-    {loading ? (
-      <ActivityIndicator size="large" color="#00BFFF" style={{ marginTop: 100 }} />
-    ) : error ? (
-      <Text style={styles.error}>{error}</Text>
-    ) : (
-      <FlatList
-        data={filtered}
-        renderItem={renderItem}
-        keyExtractor={(item) => item._id || item.name}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        contentContainerStyle={styles.list}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-        ListEmptyComponent={
-          <Text style={styles.empty}>
-            {search ? 'No matching templates' : 'No templates available'}
-          </Text>
-        }
-      />
-    )}
+      {loading ? (
+        <ActivityIndicator size="large" color="#00BFFF" style={{ marginTop: 100 }} />
+      ) : error ? (
+        <Text style={styles.error}>{error}</Text>
+      ) : (
+        <FlatList
+          data={filtered}
+          renderItem={renderItem}
+          keyExtractor={(item) => item._id || item.name}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
+          contentContainerStyle={styles.list}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          ListEmptyComponent={
+            <Text style={styles.empty}>
+              {search ? 'No matching templates' : 'No templates available'}
+            </Text>
+          }
+        />
+      )}
 
-    <Text style={styles.footer}>Metal Products • More categories coming soon</Text>
-  </SafeAreaView>
-);
+      <Text style={styles.footer}>Metal Products • More categories coming soon</Text>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#f9f9f9' },
-  header: { paddingLeft: 30, paddingTop:45, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#eee' },
+  header: { paddingLeft: 30, paddingTop: 45, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#eee' },
   title: { fontSize: 26, fontWeight: '700', marginBottom: 5, color: '#333' },
   searchInput: {
     backgroundColor: '#f0f0f0',

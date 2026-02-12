@@ -35,14 +35,14 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-  name="more"
-  options={{
-    title: 'More',
-    tabBarIcon: ({ color, size }) => (
-      <Ionicons name="menu-outline" size={size} color={color} />
-    ),
-  }}
-/>
+        name="more"
+        options={{
+          title: 'More',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="menu-outline" size={size} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

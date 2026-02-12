@@ -24,7 +24,7 @@ export default function CustomDrawerContent(props: DrawerContentComponentProps) 
     <DrawerContentScrollView {...props}>
       <View style={styles.container}>
         {/* Header */}
-     
+
 
         {/* Logo */}
         <View style={styles.logoContainer}>
@@ -63,11 +63,11 @@ export default function CustomDrawerContent(props: DrawerContentComponentProps) 
             <Ionicons name="log-out-outline" size={24} color="#FF3B30" />
             <Text style={[styles.label, { color: '#FF3B30' }]}>Logout</Text>
           </TouchableOpacity> */}
-             <View style={styles.header}>
-          <TouchableOpacity onPress={closeDrawer}>
-            <Ionicons  name="close-circle" size={28} color="#333" />
-          </TouchableOpacity>
-        </View>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={closeDrawer}>
+              <Ionicons name="close-circle" size={28} color="#333" />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </DrawerContentScrollView>
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
     padding: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
-    marginTop:200,
-    marginLeft:80
+    marginTop: 200,
+    marginLeft: 80
   },
   title: { fontSize: 22, fontWeight: '600', marginLeft: 16 },
   logoContainer: { alignItems: 'center', paddingVertical: 40 },

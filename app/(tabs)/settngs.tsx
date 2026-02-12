@@ -6,16 +6,17 @@ import * as SecureStore from 'expo-secure-store';
 
 export default function SettingsScreen() {
 
-    return(<>
-    <View>
-        <Text style={styles.fontHeader}>This is settings page</Text>
-    </View>
+    return (<>
+        <View>
+            <Text style={styles.fontHeader}>This is settings page</Text>
+        </View>
     </>
 
-    )}
+    )
+}
 
-    export const styles=StyleSheet.create({
-        fontHeader:{
-            color:'black'
-        }
-    })
+export const styles = StyleSheet.create({
+    fontHeader: {
+        color: 'black'
+    }
+})

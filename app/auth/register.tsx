@@ -27,7 +27,7 @@ export default function Register() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 20, backgroundColor: "#fff" }}>
-                       <Pressable
+      <Pressable
         onPress={() => router.back()}
         style={{
           flexDirection: 'row',

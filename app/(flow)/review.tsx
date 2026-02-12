@@ -9,17 +9,17 @@ export default function ReviewScreen() {
 
   const { imageUri, count } = useLocalSearchParams<{
     imageUri: string;
-    count:string;
+    count: string;
   }>();
   // const count = 120;
 
   const handleAdd = () => {
-//TODO ADD Logic
+    //TODO ADD Logic
     console.log('Add count');
   };
 
   const handleRemove = () => {
-  //TODO Remove Logic
+    //TODO Remove Logic
     console.log('Remove count');
   };
 
@@ -76,9 +76,9 @@ export default function ReviewScreen() {
             <Ionicons name="document-text-outline" size={24} color="#555" />
             <Text style={styles.bottomLabel}>Form</Text>
           </Pressable>
-          <Pressable 
-          style={styles.bottomItem}
-          onPress={()=>router.push('/')}
+          <Pressable
+            style={styles.bottomItem}
+            onPress={() => router.push('/')}
           >
             <Ionicons name="camera-outline" size={24} color="#555" />
             <Text style={styles.bottomLabel}>New Photo</Text>

@@ -17,8 +17,8 @@ export default function Login() {
     try {
       const res = await api.post("/auth/login", { email, password });
       await SecureStore.setItemAsync("authToken", res.data.token);
-      console.log("authtoken is ",res.data.token);
-      
+      console.log("authtoken is ", res.data.token);
+
       Alert.alert("Success", "Login successful");
       router.replace("/(tabs)/template"); // Redirect to templates
     } catch (err: any) {
@@ -30,7 +30,7 @@ export default function Login() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", padding: 20, backgroundColor: "#fff" }}>
-                 <Pressable
+      <Pressable
         onPress={() => router.back()}
         style={{
           flexDirection: 'row',
