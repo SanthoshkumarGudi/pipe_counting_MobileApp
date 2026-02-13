@@ -11,7 +11,6 @@ export default function SettingsScreen() {
             <Text style={styles.fontHeader}>This is settings page</Text>
         </View>
     </>
-
     )
 }
 
