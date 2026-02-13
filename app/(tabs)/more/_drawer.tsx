@@ -11,6 +11,8 @@ import { useNavigation, DrawerActions } from '@react-navigation/native';
 import { router } from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
 import { DrawerContentScrollView, DrawerContentComponentProps } from '@react-navigation/drawer';
+import { ComponentProps } from 'react';
+type IoniconName = ComponentProps<typeof Ionicons>['name'];
 
 export default function CustomDrawerContent(props: DrawerContentComponentProps) {
   const { navigation } = props;
@@ -19,6 +21,15 @@ export default function CustomDrawerContent(props: DrawerContentComponentProps) 
     navigation.closeDrawer();
     router.push('/(tabs)/template')
   };
+
+  const menuItems: { icon: IoniconName; label: string }[] = [
+  { icon: 'book-outline', label: 'Guides' },
+  { icon: 'bulb-outline', label: 'Hints' },
+  { icon: 'help-circle-outline', label: 'Support' },
+  { icon: 'star-outline', label: 'Rate us!' },
+  { icon: 'information-outline', label: 'About' },
+];
+
 
   return (
     <DrawerContentScrollView {...props}>
@@ -34,14 +45,7 @@ export default function CustomDrawerContent(props: DrawerContentComponentProps) 
         </View>
 
         {/* Menu items */}
-        <View style={styles.menu}>
-          {[
-            { icon: 'book-outline', label: 'Guides' },
-            { icon: 'bulb-outline', label: 'Hints' },
-            { icon: 'help-circle-outline', label: 'Support' },
-            { icon: 'star-outline', label: 'Rate us!' },
-            { icon: 'information-outline', label: 'About' },
-          ].map((item, i) => (
+        {menuItems.map((item, i) => (
             <TouchableOpacity
               key={i}
               style={styles.item}
@@ -51,25 +55,18 @@ export default function CustomDrawerContent(props: DrawerContentComponentProps) 
                 // Add real navigation later, e.g. router.push('/guides')
               }}
             >
-              <Ionicons name="at-sharp" size={24} color="#00A650" />
+              <Ionicons name={item.icon} size={24} color="#00A650" />
               <Text style={styles.label}>{item.label}</Text>
             </TouchableOpacity>
           ))}
 
-          {/* <TouchableOpacity
-            style={[styles.item, styles.logout]}
-            onPress={handleLogout}
-          >
-            <Ionicons name="log-out-outline" size={24} color="#FF3B30" />
-            <Text style={[styles.label, { color: '#FF3B30' }]}>Logout</Text>
-          </TouchableOpacity> */}
           <View style={styles.header}>
             <TouchableOpacity onPress={closeDrawer}>
               <Ionicons name="close-circle" size={28} color="#333" />
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      
     </DrawerContentScrollView>
   );
 }
@@ -103,6 +100,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 16,
+    paddingLeft: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
   },
