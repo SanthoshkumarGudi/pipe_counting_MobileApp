@@ -55,10 +55,6 @@ export default function PreviewScreen() {
         <Pressable style={styles.reselectButton} onPress={goToImageSelect}>
           <Text style={styles.reselectText}>Re-select photo</Text>
         </Pressable>
-
-        {/* Bottom action area */}
-        {/* // ... rest of your component above remains similar ... */}
-
         <View style={styles.bottomBar}>
           <Pressable style={styles.bottomIconButton} onPress={() => { /* open tools */ }}>
             <Ionicons name="grid-outline" size={26} color="#555" />

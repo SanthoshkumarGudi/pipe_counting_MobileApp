@@ -3,6 +3,7 @@ import { View, Text, Image, Pressable, StyleSheet, ScrollView } from 'react-nati
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useState } from 'react';
 
 
 export default function ReviewScreen() {
@@ -11,16 +12,18 @@ export default function ReviewScreen() {
     imageUri: string;
     count: string;
   }>();
-  // const count = 120;
+  const [adjustCount, setAdjustCount]:any = useState(count);
 
   const handleAdd = () => {
-    //TODO ADD Logic
+    //TODO ADD LOGIC
     console.log('Add count');
+    setAdjustCount((prev:any)=>prev+1)
   };
 
   const handleRemove = () => {
     //TODO Remove Logic
     console.log('Remove count');
+    setAdjustCount((prev:any)=>prev-1)
   };
 
   const goBack = () => router.back();
@@ -35,7 +38,7 @@ export default function ReviewScreen() {
           <Text style={styles.title}>Review</Text>
           <View style={{ width: 40 }} />
         </View>
-        <Text style={styles.resultText}>Result : {count}</Text>
+        <Text style={styles.resultText}>Result : {adjustCount}</Text>
         <View style={styles.imageContainer}>
           {imageUri ? (
             <Image

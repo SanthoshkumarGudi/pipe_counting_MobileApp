@@ -35,7 +35,7 @@ export default function ProcessingScreen() {
 
         // Get the real count from backend response
         const realCount = Number(response.data.count) || 0;
-        console.log('Navigating to review with count:', realCount);
+        console.log('Navigating to review with the count:', realCount);
         // Navigate to review with real data
         router.push({
           pathname: '/review',

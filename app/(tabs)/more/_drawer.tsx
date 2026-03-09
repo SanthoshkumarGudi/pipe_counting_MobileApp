@@ -40,6 +40,7 @@ export default function CustomDrawerContent(props: DrawerContentComponentProps) 
         {/* Logo */}
         <View style={styles.logoContainer}>
           <View style={styles.logoCircle}>
+            
             <Text style={styles.logoText}>C</Text>
           </View>
         </View>

@@ -17,6 +17,9 @@ import { router, useFocusEffect } from 'expo-router';
 import { api } from '@/services/api';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { useColorScheme } from 'react-native';
+  import * as SecureStore from "expo-secure-store";
+
 
 const { width } = Dimensions.get('window');
 const cardWidth = (width - 48) / 2; // 2 columns with padding
@@ -35,12 +38,20 @@ export default function TemplateScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+  const colorScheme = useColorScheme();
+
 
   const fetchTemplates = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await api.get('/templates');
+      const token = await SecureStore.getItemAsync("authToken");;
+
+      const response = await api.get('/templates', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       const data = response.data;
       setTemplates(data);
       setFiltered(data);
@@ -71,6 +82,9 @@ export default function TemplateScreen() {
     );
     setFiltered(results);
   }, [search, templates]);
+
+  console.log("color scheme is ", colorScheme);
+  
 
   const onRefresh = () => {
     setRefreshing(true);
