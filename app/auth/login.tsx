@@ -10,12 +10,18 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+ 
+  const token2= "dc3d22097f6458edef3716e8e1d5bc41f3c04094576508c831baa11557455454979d9078";
+  // const token= "dc3d22097f6458edef3716e8e1d5bc41f3c04094576508c831baa1155";
+  // localStorage.setItem("santhosh_token", token2);
 
   const login = async () => {
     if (!email || !password) return Alert.alert("Error", "Email and password required");
     setLoading(true);
     try {
-      const res = await api.post("/auth/login", { email, password });
+      const res = await api.post("/auth/login", { email, password }, {
+        headers: {"Authorization": `Bearer ${token2 }`} // Include token if needed
+      });
       await SecureStore.setItemAsync("authToken", res.data.token);
       console.log("authtoken is ", res.data.token);
 

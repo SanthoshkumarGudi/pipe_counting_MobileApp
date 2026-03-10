@@ -15,8 +15,9 @@ export default function Register() {
     if (!name || !email || !password || !phone) return Alert.alert("Error", "All fields required");
     setLoading(true);
     try {
-      await api.post("/auth/register", { name, email, password, phone });
-      Alert.alert("Success", "Verification link sent to your email.");
+      const response= await api.post("/auth/register", { name, email, password, phone });
+      Alert.alert("Success", response.data.message);
+
       router.push("/auth/login");
     } catch (err: any) {
       Alert.alert("Error", err.response?.data?.error || "Registration failed");
