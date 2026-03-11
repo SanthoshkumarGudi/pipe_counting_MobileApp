@@ -8,7 +8,8 @@ import { Ionicons } from '@expo/vector-icons';
 export default function ImageSelect() {
   const params = useLocalSearchParams();
   const templateName = params.templateName as string || 'Template';
-
+  console.log("template is", templateName);
+  
   useEffect(() => {
     (async () => {
       if (Platform.OS !== 'web') {
@@ -62,7 +63,7 @@ export default function ImageSelect() {
 
     if (!result.canceled && result.assets?.[0]?.uri) {
       router.push({
-        pathname: '/preview',
+        pathname: '/(flow)/preview',
         params: { imageUri: result.assets[0].uri, templateName },
       });
     }
@@ -70,9 +71,9 @@ export default function ImageSelect() {
 
   const useSample = () => {
     // Replace with your bundled asset or remote URL
-    const sampleUri = 'https://example.com/sample-pipe-image.jpg'; // or require('../../assets/sample.jpg')
+    const sampleUri = 'https://pipe-couting-mobileapp-backend-1.onrender.com/images/sequentialArrangement.png'; // or require('../../assets/sample.jpg')
     router.push({
-      pathname: '/preview',
+      pathname: '/(flow)/preview',
       params: { imageUri: sampleUri, templateName },
     });
   };
@@ -120,9 +121,10 @@ export default function ImageSelect() {
 
       {/* Sample */}
       <Pressable style={styles.sampleCard} onPress={useSample}>
+
         <Text style={styles.sampleText}>COUNT FROM SAMPLE PHOTO</Text>
         <Image
-          source={{ uri: 'https://placekitten.com/300/300' }}
+          source={{ uri: 'https://pipe-couting-mobileapp-backend-1.onrender.com/images/sequentialArrangement.png' }}
           style={styles.sampleImage}
         />
       </Pressable>

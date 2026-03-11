@@ -38,7 +38,7 @@ export default function ProcessingScreen() {
         console.log('Navigating to review with the count:', realCount);
         // Navigate to review with real data
         router.push({
-          pathname: '/review',
+          pathname: '/(flow)/review',
           params: {
             imageUri,
             templateName,

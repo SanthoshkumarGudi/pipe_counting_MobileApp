@@ -12,18 +12,19 @@ export default function ReviewScreen() {
     imageUri: string;
     count: string;
   }>();
-  const [adjustCount, setAdjustCount]:any = useState(count);
+  const [adjustCount, setAdjustCount] = useState(Number(count));
 
   const handleAdd = () => {
     //TODO ADD LOGIC
     console.log('Add count');
-    setAdjustCount((prev:any)=>prev+1)
+      setAdjustCount((prev) => prev + 1);
+    console.log("changed add type");
   };
 
   const handleRemove = () => {
     //TODO Remove Logic
     console.log('Remove count');
-    setAdjustCount((prev:any)=>prev-1)
+    setAdjustCount((prev)=>prev-1)
   };
 
   const goBack = () => router.back();

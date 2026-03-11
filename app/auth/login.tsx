@@ -19,9 +19,10 @@ export default function Login() {
     if (!email || !password) return Alert.alert("Error", "Email and password required");
     setLoading(true);
     try {
-      const res = await api.post("/auth/login", { email, password }, {
-        headers: {"Authorization": `Bearer ${token2 }`} // Include token if needed
-      });
+      const res = await api.post("/auth/login", { email, password });
+      //   {
+      //   headers: {"Authorization": `Bearer ${token2 }`} // Include token if needed
+      // });
       await SecureStore.setItemAsync("authToken", res.data.token);
       console.log("authtoken is ", res.data.token);
 
