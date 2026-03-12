@@ -16,6 +16,7 @@ import { router } from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '../context/ThemeContext';
 
 // Your logo (update path if needed)
 const logo = require('../../assets/images/prixgen.png');
@@ -23,6 +24,7 @@ const logo = require('../../assets/images/prixgen.png');
 export default function OpeningScreen() {
   const [isChecking, setIsChecking] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { theme, setMode, isDark } = useTheme();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -75,7 +77,7 @@ export default function OpeningScreen() {
 
   // Only reach here if NO token → show unauthenticated screen (Figure 1)
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
       {isLoggedIn ? <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutText}>Logout</Text>
@@ -85,7 +87,7 @@ export default function OpeningScreen() {
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
       >
-        <View style={styles.content}>
+        <View style={[styles.content, { backgroundColor: theme.background }]}>
           {/* Logo */}
           <Image source={logo} style={styles.logo} resizeMode="contain" />
 

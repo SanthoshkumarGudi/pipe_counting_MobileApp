@@ -74,6 +74,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme(newTheme);
   }, [mode, systemColorScheme]);
 
+  console.log("inside ThemeContext", { theme, mode});
+  
+
   const changeMode = async (newMode: ThemeMode) => {
     setModeState(newMode);
     try {

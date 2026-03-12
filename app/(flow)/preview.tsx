@@ -1,42 +1,45 @@
 // app/preview.tsx
-import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
-import { useLocalSearchParams, router } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { View, Text, Image, Pressable, StyleSheet } from "react-native";
+import { useLocalSearchParams, router } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "../context/ThemeContext";
 
 export default function PreviewScreen() {
-  const { imageUri, templateName = 'Template' } = useLocalSearchParams<{
+  const { imageUri, templateName = "Template" } = useLocalSearchParams<{
     imageUri: string;
     templateName?: string;
   }>();
 
+  const { theme, isDark } = useTheme();
+  const styles = createStyles(theme, isDark);
+
   const goToProcessing = () => {
     router.push({
-      pathname: '/processing',
+      pathname: "/processing",
       params: { imageUri, templateName },
     });
   };
 
   const goBack = () => router.back();
-  const goToImageSelect = () => router.push('/image-select');
+  const goToImageSelect = () => router.push("/image-select");
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        {/* Header / Back + Title */}
+        {/* Header */}
         <View style={styles.header}>
           <Pressable onPress={goBack} hitSlop={16} style={styles.backButton}>
-            <Ionicons name="arrow-back" size={28} color="#222" />
+            <Ionicons name="arrow-back" size={28} color={theme.text} />
           </Pressable>
 
           <Text style={styles.title}>Prepare</Text>
 
-          {/* invisible spacer for centering */}
           <View style={{ width: 40 }} />
         </View>
 
-        {/* Main content - photo */}
+        {/* Photo */}
         <View style={styles.photoContainer}>
           {imageUri ? (
             <Image
@@ -51,32 +54,41 @@ export default function PreviewScreen() {
           )}
         </View>
 
-        {/* Re-select photo */}
+        {/* Reselect */}
         <Pressable style={styles.reselectButton} onPress={goToImageSelect}>
           <Text style={styles.reselectText}>Re-select photo</Text>
         </Pressable>
+
+        {/* Bottom bar */}
         <View style={styles.bottomBar}>
-          <Pressable style={styles.bottomIconButton} onPress={() => { /* open tools */ }}>
-            <Ionicons name="grid-outline" size={26} color="#555" />
+          <Pressable style={styles.bottomIconButton}>
+            <Ionicons name="grid-outline" size={26} color={theme.gray} />
             <Text style={styles.bottomLabel}>Tools</Text>
           </Pressable>
 
-          <Pressable style={styles.bottomIconButton} onPress={() => { /* open form */ }}>
-            <Ionicons name="document-text-outline" size={26} color="#555" />
+          <Pressable style={styles.bottomIconButton}>
+            <Ionicons
+              name="document-text-outline"
+              size={26}
+              color={theme.gray}
+            />
             <Text style={styles.bottomLabel}>Form</Text>
           </Pressable>
 
-          {/* Big COUNT button in center */}
+          {/* COUNT button */}
           <Pressable style={styles.countButton} onPress={goToProcessing}>
             <Text style={styles.countButtonText}>COUNT</Text>
           </Pressable>
 
-          <Pressable style={styles.bottomIconButton} onPress={() => { /* more options */ }}>
-            <Ionicons name="ellipsis-horizontal" size={26} color="#555" />
+          <Pressable style={styles.bottomIconButton}>
+            <Ionicons
+              name="ellipsis-horizontal"
+              size={26}
+              color={theme.gray}
+            />
             <Text style={styles.bottomLabel}>More</Text>
           </Pressable>
 
-          {/* Optional: if you want to keep a "hidden" fifth spot for balance */}
           <View style={{ width: 60 }} />
         </View>
       </View>
@@ -84,140 +96,126 @@ export default function PreviewScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: 20,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 8,
-    marginBottom: 24,
-  },
-  backButton: {
-    padding: 8,
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: '700',
-    color: '#00BFFF',
-    letterSpacing: -0.2,
-  },
-  photoContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    marginBottom: 20,
-  },
-  photo: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 20,
-    backgroundColor: '#f8f9fa',
-  },
-  noImageContainer: {
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f8f9fa',
-    borderRadius: 20,
-  },
-  noImageText: {
-    fontSize: 18,
-    color: '#94a3b8',
-    fontWeight: '500',
-  },
-  reselectButton: {
-    alignSelf: 'flex-start',
-    paddingVertical: 12,
-    paddingHorizontal: 8,
-    marginBottom: 32,
-  },
-  reselectText: {
-    color: 'black',
-    fontSize: 16,
-    fontWeight: '700',
+const createStyles = (theme: any, isDark: boolean) =>
+  StyleSheet.create({
+    safeArea: {
+      flex: 1,
+      backgroundColor: theme.background,
+    },
 
-  },
-  bottomActions: {
-    paddingBottom: 24,
-    gap: 16,
-    alignItems: 'center'
-  },
-  secondaryButtons: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 16,
-    marginBottom: 16,
-  },
-  secondaryButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 12,
-    backgroundColor: '#f1f5f9',
-  },
-  secondaryButtonText: {
-    color: '#475569',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  bottomBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#eee',
-    // Optional: subtle shadow upward
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -3 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 8,
-  },
+    container: {
+      flex: 1,
+      paddingHorizontal: 20,
+    },
 
-  bottomIconButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 60,           // fixed width helps even spacing
-    paddingVertical: 8,
-  },
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginTop: 8,
+      marginBottom: 24,
+    },
 
-  bottomLabel: {
-    fontSize: 11,
-    color: '#666',
-    marginTop: 4,
-    fontWeight: '500',
-  },
+    backButton: {
+      padding: 8,
+    },
 
-  countButton: {
-    backgroundColor: '#00BFFF',
-    paddingVertical: 14,
-    paddingHorizontal: 40,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#00BFFF',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.4,
-    shadowRadius: 8,
-    elevation: 10,
-    // makes it stand out more
-    transform: [{ scale: 1.08 }], // slight grow effect (optional)
-  },
+    title: {
+      fontSize: 26,
+      fontWeight: "700",
+      color: theme.primary,
+      letterSpacing: -0.2,
+    },
 
-  countButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-    letterSpacing: 0.4,
+    photoContainer: {
+      flex: 1,
+      justifyContent: "center",
+      marginBottom: 20,
+    },
 
-  },
-});
+    photo: {
+      width: "100%",
+      height: "100%",
+      borderRadius: 20,
+      backgroundColor: theme.card,
+    },
+
+    noImageContainer: {
+      height: "100%",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: theme.card,
+      borderRadius: 20,
+    },
+
+    noImageText: {
+      fontSize: 18,
+      color: theme.gray,
+      fontWeight: "500",
+    },
+
+    reselectButton: {
+      alignSelf: "flex-start",
+      paddingVertical: 12,
+      paddingHorizontal: 8,
+      marginBottom: 32,
+    },
+
+    reselectText: {
+      color: theme.text,
+      fontSize: 16,
+      fontWeight: "700",
+    },
+
+    bottomBar: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingHorizontal: 16,
+      paddingVertical: 12,
+      backgroundColor: theme.card,
+      borderTopWidth: 1,
+      borderTopColor: theme.border,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: -3 },
+      shadowOpacity: isDark ? 0.4 : 0.08,
+      shadowRadius: 6,
+      elevation: 8,
+    },
+
+    bottomIconButton: {
+      alignItems: "center",
+      justifyContent: "center",
+      width: 60,
+      paddingVertical: 8,
+    },
+
+    bottomLabel: {
+      fontSize: 11,
+      color: theme.gray,
+      marginTop: 4,
+      fontWeight: "500",
+    },
+
+    countButton: {
+      backgroundColor: theme.primary,
+      paddingVertical: 14,
+      paddingHorizontal: 40,
+      borderRadius: 10,
+      alignItems: "center",
+      justifyContent: "center",
+      shadowColor: theme.primary,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.4,
+      shadowRadius: 8,
+      elevation: 10,
+      transform: [{ scale: 1.08 }],
+    },
+
+    countButtonText: {
+      color: "#fff",
+      fontSize: 18,
+      fontWeight: "bold",
+      letterSpacing: 0.4,
+    },
+  });
